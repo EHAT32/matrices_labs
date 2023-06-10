@@ -571,17 +571,17 @@ def D(N):
     return ToeplitzMatrix(mat[0, :])
 
 
-N = 20
+N = 3
 A = FullMatrix.zero(N, 2, 1.)
 y = FullMatrix.zero(N, 1, 0.)
 # eps = 1e-13
 # A[0, 1] += eps
 # A[1, 1] -= eps
 
-for i in range(N):
-    numb = np.random.randint(1, 50)
-    A[i, 0] = numb
-    y[i, 0] = numb + np.random.randint(-10, 10)
+A[0, 1] = 0
+A[1, 1] = 1
+A[2, 1] = 2
+y[2, 0] = 3
 print(f'A:')
 print(A)
 print('----')

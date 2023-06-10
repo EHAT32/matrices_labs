@@ -62,8 +62,12 @@ class Numbaplace:
         mat = np.zeros((n+2, n+2, n+2), dtype=np.float32)
         mat[1:n+1, 1:n+1, 1:n+1] = x
         mat[n:, n:, n:] = x[:1, :1, :1]
-        res += mat[:n, 1:(n + 1), 1:(n + 1)]+mat[2:, 1:(n + 1), 1:(n + 1)]+mat[1:(n+1), :n, 1:(n+1)]+mat[1:(n+1), 2:, 1:(n+1)]\
-              +mat[1:(n+1), 1:(n+1), :n]+mat[1:(n+1), 1:(n+1), 2:]
+        res += mat[:n, 1:(n + 1), 1:(n + 1)]+\
+            mat[2:, 1:(n + 1), 1:(n + 1)]+\
+            mat[1:(n+1), :n, 1:(n+1)]+\
+            mat[1:(n+1), 2:, 1:(n+1)]+\
+            mat[1:(n+1), 1:(n+1), :n]+\
+            mat[1:(n+1), 1:(n+1), 2:]
         return res*n**2
     def __matmul__(self, x):
         return self.mul(x.reshape((self.n,self.n,self.n)), self.n).flatten()
