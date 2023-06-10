@@ -92,6 +92,25 @@ def gen_krylov_basis(A, b, m):
 
 
 #######################ex6#########################
+# Arnoldi
+
+def gen_krylov_basis_orthogonal(A, b, m):
+    n = A.shape[0]
+    
+    result = np.empty((n, m), dtype=np.float64)
+    
+    result[:, 0] = b / np.linalg.norm(b)
+    
+    for i in range(1, m):
+        tmp = A @ result[:, i - 1]
+        # orthogonalise
+        h = result[:, :i].T @ tmp
+        w = tmp - result[:, :i] @ h
+        # Normalise
+        w_norm = np.linalg.norm(w)
+        result[:, i] = w[:] / w_norm
+                
+    return result
 
 # Lanczos
 def tridiag(a, b, c, k1 = -1, k2 = 0, k3 = 1):
@@ -118,25 +137,6 @@ def lanczos(A, v1):
     
   return tridiag(y, x, y)
 
-# Arnoldi
-
-def gen_krylov_basis_orthogonal(A, b, m):
-    n = A.shape[0]
-    
-    result = np.empty((n, m), dtype=np.float64)
-    
-    result[:, 0] = b / np.linalg.norm(b)
-    
-    for i in range(1, m):
-        tmp = A @ result[:, i - 1]
-        # orthogonalise
-        h = result[:, :i].T @ tmp
-        w = tmp - result[:, :i] @ h
-        # Normalise
-        w_norm = np.linalg.norm(w)
-        result[:, i] = w[:] / w_norm
-                
-    return result
 
 #######################ex7#########################
 
